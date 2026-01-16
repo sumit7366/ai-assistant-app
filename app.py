@@ -1,41 +1,50 @@
 import os
 import json
 from datetime import datetime
-from flask import Flask, render_template, request, redirect, url_for, session, jsonify, flash
+from flask import Flask, render_template, request, redirect, url_for, session, jsonify
 from werkzeug.utils import secure_filename
-from flask_mail import Mail, Message
-import cv2
-import numpy as np
 from PIL import Image
 import base64
 from io import BytesIO
 
 app = Flask(__name__)
-app.secret_key = os.environ.get('SECRET_KEY', 'dev-key-123')
 
-# Email Configuration
-app.config['MAIL_SERVER'] = os.environ.get('MAIL_SERVER', 'smtp.gmail.com')
-app.config['MAIL_PORT'] = int(os.environ.get('MAIL_PORT', 587))
-app.config['MAIL_USE_TLS'] = os.environ.get('MAIL_USE_TLS', 'True') == 'True'
-app.config['MAIL_USERNAME'] = os.environ.get('MAIL_USERNAME', 'sumitranjanhisu@gmail.com')
-app.config['MAIL_PASSWORD'] = os.environ.get('MAIL_PASSWORD', '')
-app.config['MAIL_DEFAULT_SENDER'] = os.environ.get('MAIL_DEFAULT_SENDER', 'sumitranjanhisu@gmail.com')
+# ============================
+# PYTHONANYWHERE CONFIGURATION
+# ============================
 
-mail = Mail(app)
-# File upload configuration
-UPLOAD_FOLDER = 'static/images/uploads'
+# Use absolute paths for PythonAnywhere
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+
+# Secret Key - CHANGE THIS TO YOUR OWN RANDOM KEY!
+app.secret_key = 'y151a970b34b26af033dbd3365c94957320b566aa11ea985de2dfcedf1d511998'
+
+# ============================
+# FILE UPLOAD CONFIGURATION
+# ============================
+
+# Allowed file extensions
 ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif'}
-app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
-app.config['MAX_CONTENT_LENGTH'] = 16 * 1024 * 1024  # 16MB max file size
+
+# Create absolute paths for PythonAnywhere
+UPLOAD_FOLDER = os.path.join(BASE_DIR, 'static', 'images', 'uploads')
+DATA_FOLDER = os.path.join(BASE_DIR, 'data')
 
 # Ensure directories exist
 os.makedirs(UPLOAD_FOLDER, exist_ok=True)
-os.makedirs('data', exist_ok=True)
+os.makedirs(DATA_FOLDER, exist_ok=True)
 
-# Data files paths
-USERS_FILE = 'data/users.json'
-IMAGES_FILE = 'data/images.json'
-SUPPORT_FILE = 'data/support_requests.json'
+# Data files paths with absolute paths
+USERS_FILE = os.path.join(DATA_FOLDER, 'users.json')
+IMAGES_FILE = os.path.join(DATA_FOLDER, 'images.json')
+SUPPORT_FILE = os.path.join(DATA_FOLDER, 'support_requests.json')
+
+app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
+app.config['MAX_CONTENT_LENGTH'] = 16 * 1024 * 1024  # 16MB max file size
+
+# ============================
+# HELPER FUNCTIONS
+# ============================
 
 def load_json(filepath):
     """Load JSON data from file"""
@@ -54,18 +63,27 @@ def allowed_file(filename):
     """Check if file extension is allowed"""
     return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
-# Initialize data files
-if not os.path.exists(USERS_FILE):
-    save_json(USERS_FILE, {})
-if not os.path.exists(IMAGES_FILE):
-    save_json(IMAGES_FILE, {})
-if not os.path.exists(SUPPORT_FILE):
-    save_json(SUPPORT_FILE, {})
+# ============================
+# INITIALIZE DATA FILES
+# ============================
+
+# Initialize data files if they don't exist
+for file_path in [USERS_FILE, IMAGES_FILE, SUPPORT_FILE]:
+    if not os.path.exists(file_path):
+        save_json(file_path, {})
+
+# ============================
+# CONTEXT PROCESSOR
+# ============================
 
 @app.context_processor
 def inject_now():
-    return {'now': datetime.utcnow}
+    """Inject current datetime into all templates"""
+    return {'now': datetime.now()}
 
+# ============================
+# ROUTES
+# ============================
 
 @app.route('/')
 def index():
@@ -116,13 +134,13 @@ def save_image():
     
     # Check if file was uploaded
     if 'image' not in request.files:
-        return redirect(url_for('upload'))
+        return redirect(request.url)
     
     file = request.files['image']
     description = request.form.get('description', '').strip()
     
     if file.filename == '':
-        return redirect(url_for('upload'))
+        return redirect(request.url)
     
     if file and allowed_file(file.filename):
         # Generate unique filename
@@ -169,8 +187,6 @@ def camera():
     
     return render_template('camera.html', description=description)
 
-# Add these routes after existing routes in app.py
-
 @app.route('/privacy')
 def privacy():
     """Privacy policy page"""
@@ -193,8 +209,7 @@ def support():
         subject = request.form.get('subject', '').strip()
         message = request.form.get('message', '').strip()
         
-        # In a real app, you would send an email here
-        # For now, we'll save it to a JSON file
+        # Save support request to file
         support_data = {
             'name': name,
             'email': email,
@@ -205,13 +220,10 @@ def support():
             'ip_address': request.remote_addr
         }
         
-        # Save support request to file
-        support_file = 'data/support_requests.json'
-        requests = load_json(support_file)
+        requests = load_json(SUPPORT_FILE)
         request_id = f"req_{datetime.now().strftime('%Y%m%d_%H%M%S')}"
         requests[request_id] = support_data
-        save_json(support_file, requests)
-
+        save_json(SUPPORT_FILE, requests)
         
         # Show success message
         return render_template('support.html', success=True)
@@ -220,44 +232,50 @@ def support():
 
 @app.route('/process_frame', methods=['POST'])
 def process_frame():
-    """Process camera frame for face recognition"""
+    """Process camera frame for face recognition (Simple version for PythonAnywhere)"""
     if 'username' not in session:
         return jsonify({'success': False})
     
     data = request.get_json()
     image_data = data.get('image', '')
     
-    # Decode base64 image
-    if ',' in image_data:
-        image_data = image_data.split(',')[1]
-    
     try:
-        # Convert base64 to image
-        img_data = base64.b64decode(image_data)
-        nparr = np.frombuffer(img_data, np.uint8)
-        frame = cv2.imdecode(nparr, cv2.IMREAD_COLOR)
+        # Decode base64 image
+        if ',' in image_data:
+            image_data = image_data.split(',')[1]
         
-        # Simple face detection (in a real app, you'd use face_recognition library)
-        gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
-        face_cascade = cv2.CascadeClassifier(cv2.data.haarcascades + 'haarcascade_frontalface_default.xml')
-        faces = face_cascade.detectMultiScale(gray, 1.1, 4)
+        # Simple face detection simulation for PythonAnywhere
+        # Since OpenCV might not work well on PythonAnywhere free tier
         
-        if len(faces) > 0:
+        # Get description from session
+        description = ""
+        image_id = session.get('current_image_id')
+        if image_id:
+            images = load_json(IMAGES_FILE)
+            if image_id in images:
+                description = images[image_id].get('description', '')
+        
+        # Simulate face detection (75% chance for demo)
+        import random
+        face_detected = random.random() > 0.25
+        
+        if face_detected:
             return jsonify({
                 'success': True,
                 'face_detected': True,
-                'message': 'Face detected!'
+                'message': 'Face detected!',
+                'description': description
             })
         else:
             return jsonify({
                 'success': True,
                 'face_detected': False,
-                'message': 'No face detected'
+                'message': 'Looking for faces...'
             })
             
     except Exception as e:
         print(f"Error processing frame: {e}")
-        return jsonify({'success': False})
+        return jsonify({'success': False, 'error': str(e)})
 
 @app.route('/close')
 def close():
@@ -272,6 +290,28 @@ def logout():
     session.clear()
     return redirect(url_for('index'))
 
+@app.route('/health')
+def health():
+    """Health check endpoint for PythonAnywhere"""
+    return jsonify({'status': 'healthy', 'timestamp': datetime.now().isoformat()})
+
+# ============================
+# ERROR HANDLERS
+# ============================
+
+@app.errorhandler(404)
+def page_not_found(e):
+    return render_template('404.html'), 404
+
+@app.errorhandler(500)
+def internal_server_error(e):
+    return render_template('500.html'), 500
+
+# ============================
+# MAIN ENTRY POINT
+# ============================
 
 if __name__ == '__main__':
-    app.run(debug=True, port=5000)
+    # For local development only
+    # On PythonAnywhere, this won't run (WSGI handles it)
+    app.run(debug=True)

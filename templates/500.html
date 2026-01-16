@@ -1,0 +1,14 @@
+{% extends "layout.html" %}
+
+{% block title %}Server Error{% endblock %}
+
+{% block content %}
+<div class="card" style="text-align: center;">
+    <i class="fas fa-server" style="font-size: 5rem; color: #ff416c; margin-bottom: 1rem;"></i>
+    <h1>500 - Server Error</h1>
+    <p>Something went wrong on our end. Please try again later.</p>
+    <a href="{{ url_for('index') }}" class="btn">
+        <i class="fas fa-home"></i> Go Home
+    </a>
+</div>
+{% endblock %}
