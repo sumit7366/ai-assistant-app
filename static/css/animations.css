@@ -1,0 +1,122 @@
+/* Background Animation */
+@keyframes gradientBG {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+@keyframes float {
+    0%, 100% { transform: translateY(0px); }
+    50% { transform: translateY(-20px); }
+}
+
+@keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.7; }
+}
+
+@keyframes slideIn {
+    from { transform: translateY(30px); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+/* Particle animation */
+@keyframes move {
+    100% {
+        transform: translate3d(0, 0, 1px) rotate(360deg);
+    }
+}
+
+.animated-bg {
+    background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
+    background-size: 400% 400%;
+    animation: gradientBG 15s ease infinite;
+    min-height: 100vh;
+}
+
+.particle {
+    position: fixed;
+    width: 20vmin;
+    height: 20vmin;
+    border-radius: 20vmin;
+    backface-visibility: hidden;
+    perspective: 1000px;
+    animation: move 45s infinite linear;
+    z-index: -1;
+}
+
+.particle:nth-child(0) {
+    color: #FFACAC;
+    top: 24%;
+    left: 14%;
+    animation-duration: 40s;
+    animation-delay: -16s;
+    transform-origin: -20vw 23vh;
+}
+
+.particle:nth-child(1) {
+    color: #E45A84;
+    top: 30%;
+    left: 86%;
+    animation-duration: 38s;
+    animation-delay: -32s;
+    transform-origin: 10vw 21vh;
+}
+
+.particle:nth-child(2) {
+    color: #583C87;
+    top: 95%;
+    left: 47%;
+    animation-duration: 25s;
+    animation-delay: -26s;
+    transform-origin: -5vw 18vh;
+}
+
+.particle:nth-child(3) {
+    color: #FFACAC;
+    top: 55%;
+    left: 8%;
+    animation-duration: 29s;
+    animation-delay: -2s;
+    transform-origin: 22vw 6vh;
+}
+
+.particle:nth-child(4) {
+    color: #E45A84;
+    top: 39%;
+    left: 13%;
+    animation-duration: 43s;
+    animation-delay: -9s;
+    transform-origin: 17vw 2vh;
+}
+
+.particle:nth-child(5) {
+    color: #583C87;
+    top: 8%;
+    left: 32%;
+    animation-duration: 18s;
+    animation-delay: -41s;
+    transform-origin: -18vw 6vh;
+}
+
+/* Floating elements */
+.floating {
+    animation: float 6s ease-in-out infinite;
+}
+
+.slide-in {
+    animation: slideIn 0.8s ease-out;
+}
+
+.fade-in {
+    animation: fadeIn 1.2s ease-out;
+}
+
+.pulse {
+    animation: pulse 2s infinite;
+}

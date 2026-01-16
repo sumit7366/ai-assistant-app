@@ -1,0 +1,29 @@
+{% extends "layout.html" %}
+
+{% block title %}Welcome{% endblock %}
+
+{% block content %}
+<div class="card slide-in">
+    <i class="fas fa-robot floating" style="font-size: 4rem; color: #6a11cb; margin-bottom: 1rem;"></i>
+    <h1>Welcome to AI Assistant</h1>
+    <p class="subtitle">Your personal intelligent companion</p>
+    
+    <form action="{{ url_for('save_name') }}" method="POST" class="fade-in">
+        <div class="form-group">
+            <label for="name"><i class="fas fa-user"></i> What's your name?</label>
+            <input type="text" id="name" name="name" required 
+                   placeholder="Enter your name here..." 
+                   autocomplete="off"
+                   autofocus>
+        </div>
+        
+        <button type="submit" class="btn">
+            <i class="fas fa-arrow-right"></i> Continue
+        </button>
+    </form>
+    
+    <div style="margin-top: 2rem; color: #666; font-size: 0.9rem;">
+        <i class="fas fa-info-circle"></i> Your name will be stored locally for personalized experience
+    </div>
+</div>
+{% endblock %}

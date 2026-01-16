@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Personal Assistant AI - {% block title %}Welcome{% endblock %}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/animations.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+
+<body class="animated-bg">
+    <!-- Animated Background Particles -->
+    <div class="particles-container">
+        <!-- Particles are created by JavaScript -->
+    </div>
+
+    <!-- Header -->
+    <header>
+        <div class="header-content">
+            <a href="{{ url_for('index') }}" class="logo">
+                <i class="fas fa-robot logo-icon"></i>
+                <span>AI Assistant</span>
+            </a>
+            <nav>
+                <ul>
+                    {% if session.username %}
+                    <li><a href="{{ url_for('welcome') }}"><i class="fas fa-home"></i> Home</a></li>
+                    <li><a href="{{ url_for('upload') }}"><i class="fas fa-upload"></i> Upload</a></li>
+                    <li><a href="{{ url_for('camera') }}"><i class="fas fa-camera"></i> Camera</a></li>
+                    <li><a href="{{ url_for('close') }}"><i class="fas fa-power-off"></i> Close</a></li>
+                    <li><a href="{{ url_for('logout') }}"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
+                    {% else %}
+                    <li><a href="{{ url_for('index') }}"><i class="fas fa-home"></i> Home</a></li>
+                    {% endif %}
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <div class="container">
+            {% block content %}{% endblock %}
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <!-- Footer Section -->
+    <footer>
+        <div class="footer-links">
+            <a href="{{ url_for('privacy') }}" data-tooltip="Read our Privacy Policy">
+                <i class="fas fa-shield-alt"></i> Privacy
+            </a>
+            <a href="{{ url_for('terms') }}" data-tooltip="Terms & Conditions">
+                <i class="fas fa-file-contract"></i> Terms & Conditions
+            </a>
+            <a href="{{ url_for('support') }}" data-tooltip="Contact Support">
+                <i class="fas fa-headset"></i> Support
+            </a>
+        </div>
+
+        <div class="footer-copy">
+            © {{ now().year }} Personal Assistant AI. All rights reserved.
+        </div>
+    </footer>
+
+    <!-- Optional CSS for styling -->
+    <style>
+        footer {
+            padding: 20px;
+            background-color: #f8f9fa;
+            /* light gray background */
+            text-align: center;
+            font-family: Arial, sans-serif;
+        }
+
+        .footer-links {
+            margin-bottom: 10px;
+        }
+
+        .footer-links a {
+            margin: 0 10px;
+            color: #333;
+            text-decoration: none;
+        }
+
+        .footer-links a:hover {
+            color: #007bff;
+            /* bootstrap blue hover effect */
+        }
+
+        .footer-copy {
+            font-size: 0.85rem;
+            color: #666;
+        }
+    </style>
+
+
+    <!-- JavaScript -->
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+    {% block scripts %}{% endblock %}
+</body>
+
+</html>

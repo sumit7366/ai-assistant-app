@@ -1,0 +1,37 @@
+{% extends "layout.html" %}
+
+{% block title %}Welcome {{ username }}{% endblock %}
+
+{% block content %}
+<div class="card slide-in">
+    <div class="welcome-message">
+        <i class="fas fa-hand-wave" style="color: #ffd700; margin-right: 10px;"></i>
+        Hello, <span class="username">{{ username }}</span>!
+    </div>
+    
+    <p style="margin-bottom: 2rem; font-size: 1.1rem;">
+        Welcome back! I'm your personal AI assistant ready to help you.
+    </p>
+    
+    <div class="btn-group">
+        <a href="{{ url_for('upload') }}" class="btn">
+            <i class="fas fa-upload"></i> Upload Image
+        </a>
+        <a href="{{ url_for('camera') }}" class="btn btn-secondary">
+            <i class="fas fa-camera"></i> Start Camera
+        </a>
+    </div>
+    
+    <div style="margin-top: 3rem; padding: 1.5rem; background: rgba(106, 17, 203, 0.1); border-radius: 10px;">
+        <h3 style="margin-bottom: 1rem; color: #6a11cb;">
+            <i class="fas fa-lightbulb"></i> How it works
+        </h3>
+        <ol style="text-align: left; padding-left: 1.5rem;">
+            <li>Upload an image and add description</li>
+            <li>Use camera for face recognition</li>
+            <li>The AI will read your saved description</li>
+            <li>Close the app when you're done</li>
+        </ol>
+    </div>
+</div>
+{% endblock %}

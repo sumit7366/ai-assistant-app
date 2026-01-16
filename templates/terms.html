@@ -1,0 +1,205 @@
+{% extends "layout.html" %}
+
+{% block title %}Terms & Conditions{% endblock %}
+
+{% block content %}
+<div class="card slide-in" style="max-width: 900px; text-align: left;">
+    <!-- Back Button -->
+    <div style="margin-bottom: 2rem;">
+        <a href="{{ url_for('index') }}" class="btn" style="display: inline-flex; align-items: center; gap: 8px;">
+            <i class="fas fa-arrow-left"></i> Back to Home
+        </a>
+    </div>
+    
+    <!-- Header -->
+    <div style="text-align: center; margin-bottom: 2rem;">
+        <i class="fas fa-file-contract" style="font-size: 3rem; color: #6a11cb; margin-bottom: 1rem;"></i>
+        <h1>Terms & Conditions</h1>
+        <p class="subtitle">Please read these terms carefully before using our application</p>
+    </div>
+    
+    <!-- WARNING BOX -->
+    <div style="background: linear-gradient(45deg, #ff416c, #ff4b2b); padding: 1.5rem; border-radius: 10px; margin-bottom: 2rem; color: white;">
+        <h3 style="margin-bottom: 0.5rem;">
+            <i class="fas fa-exclamation-triangle"></i> <span style="background: yellow; color: #333; padding: 2px 5px;">IMPORTANT WARNING</span>
+        </h3>
+        <p style="margin: 0; font-size: 1.1rem;">
+            <strong>This application is for FUN and EDUCATIONAL purposes only!</strong>
+        </p>
+    </div>
+    
+    <!-- Content -->
+    <div style="line-height: 1.8;">
+        <!-- Acceptance -->
+        <section style="margin-bottom: 2rem;">
+            <h2 style="color: #6a11cb; border-bottom: 2px solid #6a11cb; padding-bottom: 0.5rem;">
+                <i class="fas fa-check-circle"></i> Acceptance of Terms
+            </h2>
+            <p>
+                By accessing and using this application, you accept and agree to be bound by the terms and provision of this agreement. If you do not agree to these terms, please do not use this application.
+            </p>
+        </section>
+        
+        <!-- Purpose -->
+        <section style="margin-bottom: 2rem; background: rgba(255, 215, 0, 0.2); padding: 1.5rem; border-radius: 10px;">
+            <h2 style="color: #6a11cb;">
+                <i class="fas fa-bullseye"></i> <span style="background: yellow; padding: 2px 5px;">Purpose of This Application</span>
+            </h2>
+            <ul style="padding-left: 1.5rem;">
+                <li><span style="background: yellow; padding: 2px 5px;">This is a FUN project for educational purposes</span></li>
+                <li><span style="background: yellow; padding: 2px 5px;">Not intended for professional or commercial use</span></li>
+                <li><span style="background: yellow; padding: 2px 5px;">For entertainment and learning about AI technology</span></li>
+                <li><span style="background: yellow; padding: 2px 5px;">Absolutely NOT for any illegal activities</span></li>
+                <li><span style="background: yellow; padding: 2px 5px;">Use at your own discretion and responsibility</span></li>
+            </ul>
+        </section>
+        
+        <!-- User Responsibilities -->
+        <section style="margin-bottom: 2rem;">
+            <h2 style="color: #6a11cb; border-bottom: 2px solid #6a11cb; padding-bottom: 0.5rem;">
+                <i class="fas fa-user"></i> User Responsibilities
+            </h2>
+            <p>You agree to:</p>
+            <ul style="padding-left: 1.5rem;">
+                <li>Use the application only for lawful purposes</li>
+                <li>Not upload any inappropriate or illegal content</li>
+                <li>Keep your login credentials secure</li>
+                <li>Not attempt to hack or reverse engineer the app</li>
+                <li>Respect the privacy of others</li>
+            </ul>
+        </section>
+        
+        <!-- Prohibited Uses - HIGHLIGHTED -->
+        <section style="margin-bottom: 2rem; background: rgba(255, 65, 108, 0.1); padding: 1.5rem; border-radius: 10px; border-left: 5px solid #ff416c;">
+            <h2 style="color: #ff416c;">
+                <i class="fas fa-ban"></i> <span style="background: #ff416c; color: white; padding: 2px 5px;">PROHIBITED USES</span>
+            </h2>
+            <p><strong>You MUST NOT:</strong></p>
+            <ul style="padding-left: 1.5rem;">
+                <li><strong>Use for spying or surveillance</strong></li>
+                <li><strong>Harass or stalk individuals</strong></li>
+                <li><strong>Upload others' photos without consent</strong></li>
+                <li><strong>Use for any illegal activities</strong></li>
+                <li><strong>Attempt to bypass security features</strong></li>
+                <li><strong>Use for commercial purposes without permission</strong></li>
+                <li><strong>Share inappropriate or explicit content</strong></li>
+            </ul>
+            <p style="margin-top: 1rem; font-weight: bold; color: #ff416c;">
+                <i class="fas fa-exclamation-circle"></i> Any misuse will result in immediate account termination!
+            </p>
+        </section>
+        
+        <!-- Intellectual Property -->
+        <section style="margin-bottom: 2rem;">
+            <h2 style="color: #6a11cb; border-bottom: 2px solid #6a11cb; padding-bottom: 0.5rem;">
+                <i class="fas fa-copyright"></i> Intellectual Property
+            </h2>
+            <p>
+                The application and its original content, features, and functionality are owned by the developers and are protected by international copyright, trademark, and other intellectual property laws.
+            </p>
+        </section>
+        
+        <!-- Limitation of Liability -->
+        <section style="margin-bottom: 2rem;">
+            <h2 style="color: #6a11cb; border-bottom: 2px solid #6a11cb; padding-bottom: 0.5rem;">
+                <i class="fas fa-balance-scale"></i> Limitation of Liability
+            </h2>
+            <p>
+                <strong>Important:</strong> This application is provided "as is" without any warranties. We are not liable for:
+            </p>
+            <ul style="padding-left: 1.5rem;">
+                <li>Any data loss or corruption</li>
+                <li>Inaccuracies in face recognition</li>
+                <li>Technical issues or downtime</li>
+                <li>Third-party actions</li>
+                <li>Any damages from app usage</li>
+            </ul>
+        </section>
+        
+        <!-- Termination -->
+        <section style="margin-bottom: 2rem;">
+            <h2 style="color: #6a11cb; border-bottom: 2px solid #6a11cb; padding-bottom: 0.5rem;">
+                <i class="fas fa-power-off"></i> Termination
+            </h2>
+            <p>
+                We may terminate or suspend your access to the application immediately, without prior notice or liability, for any reason whatsoever, including without limitation if you breach the Terms.
+            </p>
+        </section>
+        
+        <!-- Changes to Terms -->
+        <section style="margin-bottom: 2rem;">
+            <h2 style="color: #6a11cb; border-bottom: 2px solid #6a11cb; padding-bottom: 0.5rem;">
+                <i class="fas fa-exchange-alt"></i> Changes to Terms
+            </h2>
+            <p>
+                We reserve the right to modify or replace these Terms at any time. We will try to provide at least 30 days' notice prior to any new terms taking effect.
+            </p>
+        </section>
+        
+        <!-- Disclaimer -->
+        <section style="margin-bottom: 2rem; background: rgba(106, 17, 203, 0.1); padding: 1.5rem; border-radius: 10px;">
+            <h2 style="color: #6a11cb;">
+                <i class="fas fa-comment-exclamation"></i> Final Disclaimer
+            </h2>
+            <p style="font-weight: bold;">
+                <i class="fas fa-heart" style="color: #ff416c;"></i> This application is made with good intentions for educational and entertainment purposes. Please use it responsibly and have fun exploring AI technology!
+            </p>
+            <p>
+                Remember: With great power comes great responsibility. Use this tool wisely and ethically.
+            </p>
+        </section>
+        
+        <!-- Contact -->
+        <section style="margin-bottom: 2rem;">
+            <h2 style="color: #6a11cb; border-bottom: 2px solid #6a11cb; padding-bottom: 0.5rem;">
+                <i class="fas fa-question-circle"></i> Contact & Support
+            </h2>
+            <p>
+                If you have any questions about these Terms, please contact us:
+            </p>
+            <div style="background: #f5f5f5; padding: 1rem; border-radius: 8px; margin-top: 1rem;">
+                <p style="margin: 0.5rem 0;">
+                    <i class="fas fa-envelope"></i> <strong>Email:</strong> to our support team
+                </p>
+                <p style="margin: 0.5rem 0;">
+                    <i class="fas fa-clock"></i> <strong>Response Time:</strong> 24-48 hours
+                </p>
+            </div>
+        </section>
+    </div>
+    
+    <!-- Agreement Check -->
+    <div style="margin-top: 2rem; padding: 1.5rem; background: #f9f9f9; border-radius: 10px; border: 2px solid #e1e1e1;">
+        <div style="display: flex; align-items: start; gap: 10px;">
+            <input type="checkbox" id="agreeTerms" style="margin-top: 5px;">
+            <label for="agreeTerms" style="font-weight: bold; color: #333;">
+                I have read, understood, and agree to all the Terms & Conditions mentioned above. I understand this is for fun/educational purposes only and will use it responsibly.
+            </label>
+        </div>
+    </div>
+    
+    <!-- Bottom Buttons -->
+    <div style="text-align: center; margin-top: 2rem; display: flex; gap: 1rem; justify-content: center;">
+        <a href="{{ url_for('index') }}" class="btn">
+            <i class="fas fa-home"></i> Back to Home
+        </a>
+        <a href="{{ url_for('privacy') }}" class="btn btn-secondary">
+            <i class="fas fa-shield-alt"></i> View Privacy Policy
+        </a>
+    </div>
+</div>
+
+<script>
+    // Terms agreement checkbox
+    document.addEventListener('DOMContentLoaded', function() {
+        const checkbox = document.getElementById('agreeTerms');
+        if (checkbox) {
+            checkbox.addEventListener('change', function() {
+                if (this.checked) {
+                    alert('Thank you for agreeing to our Terms & Conditions! Enjoy using the app responsibly.');
+                }
+            });
+        }
+    });
+</script>
+{% endblock %}

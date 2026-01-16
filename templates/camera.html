@@ -1,0 +1,203 @@
+{% extends "layout.html" %}
+
+{% block title %}Face Recognition{% endblock %}
+
+{% block content %}
+<div class="card slide-in">
+    <h1><i class="fas fa-camera"></i> Live Face Recognition</h1>
+    <p class="subtitle">AI will recognize faces and read descriptions</p>
+    
+    <!-- Voice Controls -->
+    <div style="margin-bottom: 1.5rem; padding: 1rem; background: rgba(106, 17, 203, 0.1); border-radius: 10px;">
+        <div style="display: flex; justify-content: space-between; align-items: center;">
+            <div>
+                <h3 style="margin: 0; color: #6a11cb;">
+                    <i class="fas fa-volume-up"></i> Voice Settings
+                </h3>
+                <small>Adjust voice speed and volume</small>
+            </div>
+            <div>
+                <button id="speakBtn" class="btn" style="padding: 8px 16px;">
+                    <i class="fas fa-play"></i> Test Voice
+                </button>
+                <button id="stopVoiceBtn" class="btn btn-secondary" style="padding: 8px 16px;">
+                    <i class="fas fa-stop"></i> Stop
+                </button>
+            </div>
+        </div>
+        
+        <div style="display: flex; gap: 1rem; margin-top: 1rem;">
+            <div style="flex: 1;">
+                <label for="rate">Speed: <span id="rateValue">1.0</span></label>
+                <input type="range" id="rate" min="0.5" max="2" step="0.1" value="1" style="width: 100%;">
+            </div>
+            <div style="flex: 1;">
+                <label for="volume">Volume: <span id="volumeValue">1.0</span></label>
+                <input type="range" id="volume" min="0" max="1" step="0.1" value="1" style="width: 100%;">
+            </div>
+        </div>
+    </div>
+    
+    <div class="camera-container fade-in">
+        <!-- Camera Feed -->
+        <video id="video" autoplay playsinline></video>
+        <canvas id="canvas"></canvas>
+        
+        <!-- Face Detection Message -->
+        <div id="faceMessage" class="face-message">
+            {% if description %}
+                Ready to recognize! When a face is detected, I'll say: "{{ description }}"
+            {% else %}
+                Camera is starting... Please allow camera access.
+            {% endif %}
+        </div>
+        
+        <!-- Voice Status -->
+        <div id="voiceStatus" style="margin-top: 1rem; padding: 10px; background: rgba(0,0,0,0.05); border-radius: 5px; display: none;">
+            <i class="fas fa-volume-up"></i> <span id="statusText">Speaking...</span>
+        </div>
+    </div>
+    
+    <div class="btn-group" style="margin-top: 2rem;">
+        <button id="startCamera" class="btn">
+            <i class="fas fa-play"></i> Start Camera
+        </button>
+        <button id="stopCamera" class="btn btn-secondary">
+            <i class="fas fa-stop"></i> Back to Upload
+        </button>
+        <button onclick="closeApplication()" class="btn btn-danger">
+            <i class="fas fa-power-off"></i> Close App
+        </button>
+    </div>
+    
+    <div style="margin-top: 2rem; color: #666; font-size: 0.9rem;">
+        <i class="fas fa-info-circle"></i> The AI will speak your saved description when it detects a face
+    </div>
+    
+    <!-- Hidden description for JavaScript -->
+    <div id="description" style="display: none;">{{ description }}</div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/camera.js') }}"></script>
+<!-- New Voice Synthesis Script -->
+<script>
+    // Speech Synthesis
+    let speech = null;
+    let isSpeaking = false;
+    let voiceRate = 1.0;
+    let voiceVolume = 1.0;
+    
+    // Get voice controls
+    const rateSlider = document.getElementById('rate');
+    const volumeSlider = document.getElementById('volume');
+    const rateValue = document.getElementById('rateValue');
+    const volumeValue = document.getElementById('volumeValue');
+    const speakBtn = document.getElementById('speakBtn');
+    const stopVoiceBtn = document.getElementById('stopVoiceBtn');
+    const voiceStatus = document.getElementById('voiceStatus');
+    const statusText = document.getElementById('statusText');
+    
+    // Update slider values
+    if (rateSlider && volumeSlider) {
+        rateSlider.addEventListener('input', function() {
+            voiceRate = parseFloat(this.value);
+            rateValue.textContent = voiceRate;
+        });
+        
+        volumeSlider.addEventListener('input', function() {
+            voiceVolume = parseFloat(this.value);
+            volumeValue.textContent = voiceVolume;
+        });
+    }
+    
+    // Test voice button
+    if (speakBtn) {
+        speakBtn.addEventListener('click', function() {
+            const description = document.getElementById('description').textContent;
+            if (description) {
+                speakText(`Test voice: ${description}`);
+            } else {
+                speakText("This is a test of the voice system. Face recognition is active.");
+            }
+        });
+    }
+    
+    // Stop voice button
+    if (stopVoiceBtn) {
+        stopVoiceBtn.addEventListener('click', function() {
+            stopSpeaking();
+        });
+    }
+    
+    // Speak text function
+    function speakText(text) {
+        if ('speechSynthesis' in window) {
+            // Stop any ongoing speech
+            stopSpeaking();
+            
+            // Create new speech
+            speech = new SpeechSynthesisUtterance(text);
+            speech.rate = voiceRate;
+            speech.volume = voiceVolume;
+            speech.pitch = 1;
+            
+            // Set voice if available
+            const voices = window.speechSynthesis.getVoices();
+            const englishVoice = voices.find(voice => 
+                voice.lang.includes('en') && voice.name.includes('Female')
+            );
+            if (englishVoice) {
+                speech.voice = englishVoice;
+            }
+            
+            // Event listeners
+            speech.onstart = function() {
+                isSpeaking = true;
+                voiceStatus.style.display = 'block';
+                statusText.textContent = 'Speaking...';
+                speakBtn.disabled = true;
+                speakBtn.innerHTML = '<i class="fas fa-volume-up"></i> Speaking';
+            };
+            
+            speech.onend = function() {
+                isSpeaking = false;
+                voiceStatus.style.display = 'none';
+                speakBtn.disabled = false;
+                speakBtn.innerHTML = '<i class="fas fa-play"></i> Test Voice';
+            };
+            
+            speech.onerror = function() {
+                isSpeaking = false;
+                voiceStatus.style.display = 'block';
+                statusText.textContent = 'Voice error. Please check browser permissions.';
+                speakBtn.disabled = false;
+                speakBtn.innerHTML = '<i class="fas fa-play"></i> Test Voice';
+            };
+            
+            // Speak
+            window.speechSynthesis.speak(speech);
+        } else {
+            alert("Your browser doesn't support speech synthesis. Please use Chrome or Edge.");
+        }
+    }
+    
+    // Stop speaking
+    function stopSpeaking() {
+        if (window.speechSynthesis) {
+            window.speechSynthesis.cancel();
+            isSpeaking = false;
+            voiceStatus.style.display = 'none';
+            if (speakBtn) {
+                speakBtn.disabled = false;
+                speakBtn.innerHTML = '<i class="fas fa-play"></i> Test Voice';
+            }
+        }
+    }
+    
+    // Expose speakText function globally for camera.js to use
+    window.speakText = speakText;
+    window.stopSpeaking = stopSpeaking;
+</script>
+{% endblock %}

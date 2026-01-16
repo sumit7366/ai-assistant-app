@@ -1,0 +1,87 @@
+{% extends "layout.html" %}
+
+{% block title %}Upload Image{% endblock %}
+
+{% block content %}
+<div class="card slide-in">
+    <h1><i class="fas fa-cloud-upload-alt"></i> Upload Image</h1>
+    <p class="subtitle">Upload a photo and describe it for AI recognition</p>
+    <!-- Add this div after the subtitle -->
+    <div style="margin-bottom: 1.5rem; padding: 1rem; background: rgba(106, 17, 203, 0.1); border-radius: 10px;">
+        <h3 style="margin-bottom: 0.5rem; color: #6a11cb;">
+            <i class="fas fa-volume-up"></i> Voice Note
+        </h3>
+        <p style="margin: 0; font-size: 0.95rem;">
+            <strong>Important:</strong> The description you write here will be spoken aloud when the AI recognizes a
+            face.
+            Write it in a way that sounds natural when spoken.
+        </p>
+    </div>
+
+    <form action="{{ url_for('save_image') }}" method="POST" enctype="multipart/form-data" class="fade-in">
+        <!-- Upload Area -->
+        <div class="upload-area" onclick="triggerUpload()">
+            <i class="fas fa-cloud-upload-alt upload-icon"></i>
+            <h3>Click to upload image</h3>
+            <p>or drag and drop</p>
+            <p class="file-info">PNG, JPG, GIF up to 10MB</p>
+            <div id="image-preview"></div>
+        </div>
+
+        <input type="file" id="image" name="image" accept="image/*" class="file-input" required>
+
+        <!-- File Name Display -->
+        <div class="file-info">
+            Selected file: <span id="file-name">No file selected</span>
+        </div>
+
+        <!-- Description -->
+        <div class="form-group" style="margin-top: 2rem;">
+            <label for="description"><i class="fas fa-comment-alt"></i> Image Description</label>
+            <textarea id="description" name="description"
+                placeholder="Describe this image. The AI will read this when it recognizes the face..."
+                required></textarea>
+            <small style="color: #666;">Example: "This is John, he loves hiking and photography"</small>
+        </div>
+
+        <!-- Upload Source -->
+        <div class="form-group">
+            <label><i class="fas fa-camera"></i> Upload Source</label>
+            <div style="display: flex; gap: 1rem; margin-top: 0.5rem;">
+                <label
+                    style="flex: 1; text-align: center; padding: 10px; border: 2px solid #e1e1e1; border-radius: 10px; cursor: pointer;">
+                    <input type="radio" name="source" value="gallery" checked style="margin-right: 5px;">
+                    <i class="fas fa-images"></i> Gallery
+                </label>
+                <label
+                    style="flex: 1; text-align: center; padding: 10px; border: 2px solid #e1e1e1; border-radius: 10px; cursor: pointer;">
+                    <input type="radio" name="source" value="camera" style="margin-right: 5px;">
+                    <i class="fas fa-camera"></i> Take Photo
+                </label>
+            </div>
+        </div>
+
+        <div class="btn-group">
+            <button type="submit" class="btn">
+                <i class="fas fa-save"></i> Save & Continue
+            </button>
+            <a href="{{ url_for('welcome') }}" class="btn btn-secondary">
+                <i class="fas fa-arrow-left"></i> Back
+            </a>
+        </div>
+    </form>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+    // Handle radio button selection
+    document.querySelectorAll('input[name="source"]').forEach(radio => {
+        radio.addEventListener('change', function () {
+            if (this.value === 'camera') {
+                alert('Camera capture will be available after saving current settings.');
+            }
+        });
+    });
+</script>
+{% endblock %}
