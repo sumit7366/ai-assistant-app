@@ -185,6 +185,11 @@ def terms():
     """Terms page"""
     return render_template('terms.html')
 
+@app.route('/about')
+def about():
+    """About page"""
+    return render_template('about.html')
+
 @app.route('/support', methods=['GET', 'POST'])
 def support():
     """Support page"""
