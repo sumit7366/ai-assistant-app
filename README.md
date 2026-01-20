@@ -306,7 +306,7 @@ This project is licensed under the **MIT License** - see the LICENSE file for de
 
 **Sumit Ranjan**
 
-- GitHub: [@sumitranjan](https://github.com/sumitranjan)
+- GitHub: [@sumitranjan](https://github.com/sumit7366)
 - Email: sumitranjanhisu@gmail.com
 
 ---
@@ -318,10 +318,10 @@ This project is licensed under the **MIT License** - see the LICENSE file for de
 
 ---
 
-**Made with ❤️ | [Report Bug](https://github.com/yourusername/ai-assistant-app/issues) | [Request Feature](https://github.com/yourusername/ai-assistant-app/pulls)**
+**Made with ❤️ | [Report Bug](https://github.com/sumit7366/ai-assistant-app/issues) | [Request Feature](https://github.com/sumit7366/ai-assistant-app/pulls)**
 
 🚀 Live Demo
-🎯 Try it now: https://ai-assistant.onrender.com
+🎯 Try it now: https://ai-assistant-app-bbi9.onrender.com
 *(Note: Free hosting sleeps after 15 mins - first load may take 30 seconds)*
 
 <div align="center"> <a href="https://ai-assistant.onrender.com" target="_blank"> <img src="https://img.shields.io/badge/TRY_LIVE_DEMO-6a11cb?style=for-the-badge&logo=rocket&logoColor=white" alt="Live Demo"> </a> </div>
@@ -391,7 +391,7 @@ ai-personal-assistant/
 Local Development
 bash
 # 1. Clone the repository
-git clone https://github.com/yourusername/ai-assistant-app.git
+git clone https://github.com/sumit7366/ai-assistant-app.git
 cd ai-assistant-app
 
 # 2. Create virtual environment
