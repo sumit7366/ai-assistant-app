@@ -321,10 +321,8 @@ This project is licensed under the **MIT License** - see the LICENSE file for de
 **Made with ❤️ | [Report Bug](https://github.com/sumit7366/ai-assistant-app/issues) | [Request Feature](https://github.com/sumit7366/ai-assistant-app/pulls)**
 
 🚀 Live Demo
-🎯 Try it now: https://ai-assistant-app-bbi9.onrender.com
-*(Note: Free hosting sleeps after 15 mins - first load may take 30 seconds)*
 
-<div align="center"> <a href="https://ai-assistant.onrender.com" target="_blank"> <img src="https://img.shields.io/badge/TRY_LIVE_DEMO-6a11cb?style=for-the-badge&logo=rocket&logoColor=white" alt="Live Demo"> </a> </div>
+<div align="center"> <a href="https://ai-assistant-app-bbi9.onrender.com" target="_blank"> <img src="https://img.shields.io/badge/TRY_LIVE_DEMO-6a11cb?style=for-the-badge&logo=rocket&logoColor=white" alt="Live Demo"> </a> </div>
 ✨ Features
 🎯 Core Features
 <div class="feature-grid"> <div class="feature-card"> <h3>🤖 Smart Face Recognition</h3> <p>Real-time face detection using camera with personalized voice feedback</p> </div> <div class="feature-card"> <h3>🗣️ Text-to-Speech</h3> <p>Speaks personalized descriptions when faces are detected</p> </div> <div class="feature-card"> <h3>📸 Image Upload</h3> <p>Upload photos from gallery or camera with descriptions</p> </div> <div class="feature-card"> <h3>🔒 Privacy First</h3> <p>Local data storage with encryption - no cloud uploads</p> </div> </div>
