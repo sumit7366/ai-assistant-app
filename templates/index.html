@@ -3,27 +3,77 @@
 {% block title %}Welcome{% endblock %}
 
 {% block content %}
+
+<!-- MAIN WELCOME CARD -->
 <div class="card slide-in">
     <i class="fas fa-robot floating" style="font-size: 4rem; color: #6a11cb; margin-bottom: 1rem;"></i>
     <h1>Welcome to AI Assistant</h1>
     <p class="subtitle">Your personal intelligent companion</p>
-    
-    <form action="{{ url_for('save_name') }}" method="POST" class="fade-in">
+
+    <form action="{{ url_for('save_name') }}" method="POST" class="fade-in" onsubmit="return validateTerms()">
+
         <div class="form-group">
-            <label for="name"><i class="fas fa-user"></i> What's your name?</label>
-            <input type="text" id="name" name="name" required 
-                   placeholder="Enter your name here..." 
-                   autocomplete="off"
-                   autofocus>
+            <label for="name">
+                <i class="fas fa-user"></i> What's your name?
+            </label>
+            <input type="text" id="name" name="name" required placeholder="Enter your name here..." autocomplete="off"
+                autofocus>
         </div>
-        
+ 
+
         <button type="submit" class="btn">
             <i class="fas fa-arrow-right"></i> Continue
         </button>
     </form>
-    
+
+
     <div style="margin-top: 2rem; color: #666; font-size: 0.9rem;">
-        <i class="fas fa-info-circle"></i> Your name will be stored locally for personalized experience
+        <i class="fas fa-info-circle"></i>
+        Your name is stored locally for a personalized experience
     </div>
 </div>
+
+<!-- FEATURES SECTION -->
+<div class="card fade-in" style="margin-top: 2rem;">
+    <h2><i class="fas fa-star"></i> Key Features</h2>
+    <ul class="feature-list">
+        <li><i class="fas fa-camera"></i> Face Detection & Recognition</li>
+        <li><i class="fas fa-upload"></i> Image Upload & Description</li>
+        <li><i class="fas fa-brain"></i> Smart AI Interaction</li>
+        <li><i class="fas fa-shield-alt"></i> Privacy-Focused & Secure</li>
+    </ul>
+</div>
+
+<!-- STATS / TRUST SECTION -->
+<div class="card fade-in" style="margin-top: 2rem;">
+    <h2><i class="fas fa-chart-line"></i> Why Choose This Assistant?</h2>
+
+    <div class="stats-grid">
+        <div class="stat-box">
+            <i class="fas fa-users"></i>
+            <h3>100+</h3>
+            <p>Users Served</p>
+        </div>
+        <div class="stat-box">
+            <i class="fas fa-clock"></i>
+            <h3>24/7</h3>
+            <p>Availability</p>
+        </div>
+        <div class="stat-box">
+            <i class="fas fa-lock"></i>
+            <h3>Secure</h3>
+            <p>Local Data Storage</p>
+        </div>
+    </div>
+</div>
+
+<!-- TRUST & PRIVACY -->
+<div class="card fade-in" style="margin-top: 2rem;">
+    <h2><i class="fas fa-user-shield"></i> Trust & Privacy</h2>
+    <p>
+        We respect your privacy. All information is stored securely and never shared
+        with third parties. Your experience is safe, transparent, and controlled by you.
+    </p>
+</div>
+
 {% endblock %}

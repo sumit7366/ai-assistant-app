@@ -3,12 +3,15 @@
 {% block title %}Page Not Found{% endblock %}
 
 {% block content %}
-<div class="card" style="text-align: center;">
+<div class="card slide-in" style="text-align: center;">
     <i class="fas fa-exclamation-triangle" style="font-size: 5rem; color: #ff9800; margin-bottom: 1rem;"></i>
     <h1>404 - Page Not Found</h1>
-    <p>The page you're looking for doesn't exist.</p>
-    <a href="{{ url_for('index') }}" class="btn">
-        <i class="fas fa-home"></i> Go Home
-    </a>
+    <p class="subtitle">The page you're looking for doesn't exist.</p>
+    
+    <div style="margin: 2rem 0;">
+        <a href="{{ url_for('index') }}" class="btn">
+            <i class="fas fa-home"></i> Go to Homepage
+        </a>
+    </div>
 </div>
 {% endblock %}

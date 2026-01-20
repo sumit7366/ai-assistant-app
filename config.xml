@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<widget xmlns="http://www.w3.org/ns/widgets" 
+        xmlns:gap="http://phonegap.com/ns/1.0"
+        id="com.ai.personal.assistant" 
+        version="1.0.0">
+    
+    <!-- App Information -->
+    <name>AI Personal Assistant</name>
+    <description>
+        Smart AI Assistant with Face Recognition and Voice Feedback.
+        Upload photos, add descriptions, and get voice alerts when faces are detected.
+    </description>
+    <author href="https://ai-assistant.onrender.com" email="support@aiassistant.com">
+        AI Assistant Team
+    </author>
+    
+    <!-- App Content Source -->
+    <content src="https://ai-assistant.onrender.com" />
+    
+    <!-- Permissions for Android -->
+    <preference name="permissions" value="none" />
+    
+    <!-- Required Permissions -->
+    <feature name="http://api.phonegap.com/1.0/camera" />
+    <feature name="http://api.phonegap.com/1.0/media" />
+    <feature name="http://api.phonegap.com/1.0/network" />
+    
+    <!-- Platform Specific -->
+    <platform name="android">
+        <icon src="www/res/icon/android/icon-36-ldpi.png" gap:qualifier="ldpi" />
+        <icon src="www/res/icon/android/icon-48-mdpi.png" gap:qualifier="mdpi" />
+        <icon src="www/res/icon/android/icon-72-hdpi.png" gap:qualifier="hdpi" />
+        <icon src="www/res/icon/android/icon-96-xhdpi.png" gap:qualifier="xhdpi" />
+        <icon src="www/res/icon/android/icon-144-xxhdpi.png" gap:qualifier="xxhdpi" />
+        <icon src="www/res/icon/android/icon-192-xxxhdpi.png" gap:qualifier="xxxhdpi" />
+        
+        <splash src="www/res/screen/android/splash-320-426-ldpi.png" gap:qualifier="land-ldpi" />
+        <splash src="www/res/screen/android/splash-320-470-ldpi.png" gap:qualifier="port-ldpi" />
+        <splash src="www/res/screen/android/splash-480-640-mdpi.png" gap:qualifier="land-mdpi" />
+        <splash src="www/res/screen/android/splash-470-320-mdpi.png" gap:qualifier="port-mdpi" />
+    </platform>
+    
+    <!-- Access Rules -->
+    <access origin="*" />
+    <allow-intent href="http://*/*" />
+    <allow-intent href="https://*/*" />
+    <allow-intent href="tel:*" />
+    <allow-intent href="sms:*" />
+    <allow-intent href="mailto:*" />
+    <allow-intent href="geo:*" />
+    
+    <!-- Preferences -->
+    <preference name="Fullscreen" value="true" />
+    <preference name="Orientation" value="portrait" />
+    <preference name="DisallowOverscroll" value="true" />
+    <preference name="android-minSdkVersion" value="19" />
+    <preference name="android-targetSdkVersion" value="29" />
+    <preference name="StatusBarOverlaysWebView" value="false" />
+    <preference name="StatusBarBackgroundColor" value="#6a11cb" />
+    <preference name="AndroidPersistentFileLocation" value="Compatibility" />
+    <preference name="android-build-tool" value="gradle" />
+    
+    <!-- Icons (if you have them) -->
+    <icon src="icon.png" />
+    
+    <!-- Splash Screen (optional) -->
+    <splash src="splash.png" />
+    
+</widget>

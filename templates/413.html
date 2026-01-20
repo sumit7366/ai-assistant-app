@@ -1,0 +1,17 @@
+{% extends "layout.html" %}
+
+{% block title %}File Too Large{% endblock %}
+
+{% block content %}
+<div class="card slide-in" style="text-align: center;">
+    <i class="fas fa-file-upload" style="font-size: 5rem; color: #ff9800; margin-bottom: 1rem;"></i>
+    <h1>413 - File Too Large</h1>
+    <p class="subtitle">The file you're trying to upload exceeds the maximum size limit (16MB).</p>
+    
+    <div style="margin: 2rem 0;">
+        <a href="{{ url_for('upload') }}" class="btn">
+            <i class="fas fa-upload"></i> Try Again
+        </a>
+    </div>
+</div>
+{% endblock %}

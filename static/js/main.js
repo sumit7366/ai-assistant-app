@@ -130,3 +130,148 @@ function closeApplication() {
         window.location.href = '/close';
     }
 }
+
+// Mobile Navigation Toggle
+const navToggle = document.querySelector('.nav-toggle');
+const nav = document.querySelector('nav');
+
+if (navToggle) {
+    navToggle.addEventListener('click', () => {
+        nav.classList.toggle('active');
+        navToggle.innerHTML = nav.classList.contains('active') 
+            ? '<i class="fas fa-times"></i>' 
+            : '<i class="fas fa-bars"></i>';
+    });
+
+    // Close menu when clicking outside
+    document.addEventListener('click', (e) => {
+        if (!nav.contains(e.target) && !navToggle.contains(e.target) && nav.classList.contains('active')) {
+            nav.classList.remove('active');
+            navToggle.innerHTML = '<i class="fas fa-bars"></i>';
+        }
+    });
+
+    // Close menu when clicking on a link
+    document.querySelectorAll('nav a').forEach(link => {
+        link.addEventListener('click', () => {
+            nav.classList.remove('active');
+            navToggle.innerHTML = '<i class="fas fa-bars"></i>';
+        });
+    });
+}
+
+// Handle window resize
+window.addEventListener('resize', () => {
+    if (window.innerWidth > 767 && nav && nav.classList.contains('active')) {
+        nav.classList.remove('active');
+        if (navToggle) {
+            navToggle.innerHTML = '<i class="fas fa-bars"></i>';
+        }
+    }
+});
+
+// Touch device detection
+const isTouchDevice = () => {
+    return 'ontouchstart' in window || navigator.maxTouchPoints > 0;
+};
+
+// Add touch-specific styles
+if (isTouchDevice()) {
+    document.body.classList.add('touch-device');
+    
+    // Increase tap target sizes for touch devices
+    const style = document.createElement('style');
+    style.textContent = `
+        .touch-device .btn {
+            min-height: 44px;
+            min-width: 44px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .touch-device nav a {
+            min-height: 44px;
+            display: flex;
+            align-items: center;
+        }
+        
+        .touch-device input,
+        .touch-device textarea,
+        .touch-device select {
+            font-size: 16px; /* Prevents iOS zoom on focus */
+        }
+    `;
+    document.head.appendChild(style);
+}
+
+// Form validation feedback
+document.addEventListener('DOMContentLoaded', function() {
+    const forms = document.querySelectorAll('form');
+    
+    forms.forEach(form => {
+        const inputs = form.querySelectorAll('input[required], textarea[required], select[required]');
+        
+        inputs.forEach(input => {
+            input.addEventListener('invalid', function(e) {
+                e.preventDefault();
+                this.style.borderColor = '#ff416c';
+                
+                // Add error message
+                let error = this.parentNode.querySelector('.error-message');
+                if (!error) {
+                    error = document.createElement('div');
+                    error.className = 'error-message';
+                    error.style.color = '#ff416c';
+                    error.style.fontSize = '0.85rem';
+                    error.style.marginTop = '5px';
+                    this.parentNode.appendChild(error);
+                }
+                error.textContent = this.validationMessage || 'This field is required';
+            });
+            
+            input.addEventListener('input', function() {
+                this.style.borderColor = '#e1e1e1';
+                const error = this.parentNode.querySelector('.error-message');
+                if (error) error.remove();
+            });
+        });
+    });
+});
+
+// Smooth scrolling for anchor links
+document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener('click', function(e) {
+        const href = this.getAttribute('href');
+        if (href !== '#') {
+            e.preventDefault();
+            const target = document.querySelector(href);
+            if (target) {
+                target.scrollIntoView({
+                    behavior: 'smooth',
+                    block: 'start'
+                });
+            }
+        }
+    });
+});
+
+// Image lazy loading
+if ('IntersectionObserver' in window) {
+    const imageObserver = new IntersectionObserver((entries, observer) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                const img = entry.target;
+                img.src = img.dataset.src;
+                img.classList.add('loaded');
+                observer.unobserve(img);
+            }
+        });
+    });
+    
+    document.querySelectorAll('img[data-src]').forEach(img => {
+        imageObserver.observe(img);
+    });
+}
+
+
